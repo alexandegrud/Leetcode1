@@ -27,18 +27,10 @@ using namespace std;
 class Solution {
 public:
 	vector<int> shuffle(vector<int>& nums, int n) {
-		vector<int> first;
-		vector<int> second;
 		vector<int> answer;
 		for (int i = 0; i < n; i++) {
-			first.push_back(nums[i]);
-		}
-		for (int i = n; i < 2 * n; i++) {
-			second.push_back(nums[i]);
-		}
-		for (int i = 0; i < n; i++) {
-			answer.push_back(first[i]);
-			answer.push_back(second[i]);
+			answer.push_back(nums[i]);
+			answer.push_back(nums[i + n]);
 		}
 		nums = answer;
 		return nums;
@@ -51,13 +43,13 @@ int main() {
 	int c, n;
 	cin >> c >> n;
 	vector<int>nums(c);
-	for (int i = 0; i < nums.size(); i++) {
+	for (size_t i = 0; i < nums.size(); i++) {
 		cin >> nums[i];
 	}
 	Solution Solution;
 	vector <int> check = Solution.shuffle(nums, n);
 	vector<int> result;
-	for (int i = 0; i < nums.size(); i++) {
+	for (size_t i = 0; i < nums.size(); i++) {
 		cout << nums[i] << " ";
 	}
 }

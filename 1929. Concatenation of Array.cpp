@@ -30,10 +30,14 @@ using namespace std;
 class Solution {
 public:
 	vector<int> getConcatenation(vector<int>& nums) {
-		const int k = nums.size();
-		for (int i = 0; i < k; i++) {
-			nums.push_back(nums[i]);
+		vector<int> result;
+		for (size_t i = 0; i < nums.size(); i++) {
+			result.push_back(nums[i]);
 		}
+		for (size_t i = 0; i < nums.size(); i++) {
+			result.push_back(nums[i]);
+		}
+		nums = result;
 		return nums;
 	}
 };
@@ -43,12 +47,12 @@ int main() {
 	int n;
 	cin >> n;
 	vector<int>nums(n);
-	for (int i = 0; i < nums.size(); i++) {
+	for (size_t i = 0; i < nums.size(); i++) {
 		cin >> nums[i];
 	}
 	Solution Solution;
 	vector<int>check = Solution.getConcatenation(nums);
-	for (int i = 0; i < nums.size(); i++) {
+	for (size_t i = 0; i < nums.size(); i++) {
 		cout << check[i];
 	}
 

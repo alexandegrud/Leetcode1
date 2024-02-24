@@ -29,15 +29,18 @@ using namespace std;
 
 class Solution {
 public:
-	vector<int>removeElement(vector<int>& nums, int val) {
-		vector<int> answer;
-		for (int i = 0; i < nums.size(); i++) {
+	int removeElement(vector<int>& nums, int val) {
+		const int n = nums.size();
+		int count = 0; 
+		vector<int>answer; 
+		for (int i = 0; i < n ; i++) {
 			if (nums[i] != val) {
 				answer.push_back(nums[i]);
+				count++;
 			}
 		}
-		nums = answer;
-		return nums;
+		nums = answer; 
+		return count; 
 	}
 };
 
@@ -46,14 +49,13 @@ int main() {
 	int n, val;
 	cin >> n >> val;
 	vector<int>nums(n);
-	for (int i = 0; i < nums.size(); i++) {
+	for (size_t i = 0; i < nums.size(); i++) {
 		cin >> nums[i];
 	}
 	Solution Solution;
-	vector<int>check = Solution.removeElement(nums, val);
-	int k = nums.size();
-	cout << k << " ";
-	for (int i = 0; i < nums.size(); i++) {
+	int check = Solution.removeElement(nums, val);
+	cout << check << " ";
+	for (size_t i = 0; i < nums.size(); i++) {
 		cout << nums[i] << " ";
 
 	}
