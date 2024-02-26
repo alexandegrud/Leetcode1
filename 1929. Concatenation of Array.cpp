@@ -30,14 +30,10 @@ using namespace std;
 class Solution {
 public:
 	vector<int> getConcatenation(vector<int>& nums) {
-		vector<int> result;
-		for (size_t i = 0; i < nums.size(); i++) {
-			result.push_back(nums[i]);
+		int size = nums.size(); 
+		for (size_t i = 0; i < size; i++) {
+			nums.push_back(nums[i]);
 		}
-		for (size_t i = 0; i < nums.size(); i++) {
-			result.push_back(nums[i]);
-		}
-		nums = result;
 		return nums;
 	}
 };
@@ -53,7 +49,7 @@ int main() {
 	Solution Solution;
 	vector<int>check = Solution.getConcatenation(nums);
 	for (size_t i = 0; i < nums.size(); i++) {
-		cout << check[i];
+		cout << check[i] << " ";
 	}
 
 }

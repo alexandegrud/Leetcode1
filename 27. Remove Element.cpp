@@ -32,14 +32,14 @@ public:
 	int removeElement(vector<int>& nums, int val) {
 		const int n = nums.size();
 		int count = 0; 
-		vector<int>answer; 
+		int k = 0; 
 		for (int i = 0; i < n ; i++) {
 			if (nums[i] != val) {
-				answer.push_back(nums[i]);
+  				 nums[k] = nums[i];
+				 k++;			
 				count++;
 			}
-		}
-		nums = answer; 
+		} 
 		return count; 
 	}
 };
@@ -55,7 +55,7 @@ int main() {
 	Solution Solution;
 	int check = Solution.removeElement(nums, val);
 	cout << check << " ";
-	for (size_t i = 0; i < nums.size(); i++) {
+	for (int i = 0; i < check; i++) {
 		cout << nums[i] << " ";
 
 	}
