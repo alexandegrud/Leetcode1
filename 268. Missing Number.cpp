@@ -26,13 +26,16 @@ using namespace std;
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int answer; 
+        int answer = 0; 
         sort(nums.begin(), nums.end());
-        for (size_t i = 0; i < nums.size(); i++) {
-            if (nums[i] != i)
-                answer =  i;
+
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] != i) {
+                answer = i; 
+                return answer;
+            }
         }
-        return answer;
+        return nums.size(); 
     }
 };
 
