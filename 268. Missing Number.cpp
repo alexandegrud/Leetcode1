@@ -19,7 +19,7 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 
 
-Спосб через разницу 
+Another way 
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
