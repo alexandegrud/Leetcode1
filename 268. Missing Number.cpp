@@ -20,33 +20,37 @@ Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 class Solution {
 public:
     int missingNumber(vector<int>& nums) {
-        int answer = 0; 
-        sort(nums.begin(), nums.end());
-
-        for(int i = 0; i < nums.size(); i++) {
-            if(nums[i] != i) {
-                answer = i; 
+        int answer = 0;
+        for (size_t i = 0; i < nums.size(); i++) {
+            for (size_t j = 0; j < nums.size() - 1; j++) {
+                if (nums[j] > nums[j + 1]) {
+                    swap(nums[j], nums[j + 1]);
+                }
+            }
+        }
+        for (size_t i = 0; i < nums.size(); i++) {
+            if (nums[i] != i) {
+                answer = i;
                 return answer;
             }
         }
-        return nums.size(); 
+        return nums.size();
     }
 };
 
 int main() {
     int n;
-    cin >> n; 
+    cin >> n;
     vector<int>nums(n);
     for (int i = 0; i < n; i++) {
-        cin >> nums[i]; 
+        cin >> nums[i];
     }
     Solution Solution;
-    int check = Solution.missingNumber(nums); 
-    cout << check; 
+    int check = Solution.missingNumber(nums);
+    cout << check;
 }
