@@ -16,6 +16,22 @@ Example 3:
 Input: nums = [9,6,4,2,3,5,7,0,1]
 Output: 8
 Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+
+
+
+Спосб через разницу 
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum=0;
+        int curr=0;
+        for(int i=0;i<nums.size();i++){
+            sum+=i+1;
+            curr+=nums[i];
+        }
+        return sum-curr;
+    }
+};
 */
 
 #include <iostream>
