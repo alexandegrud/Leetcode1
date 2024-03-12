@@ -72,6 +72,20 @@ public:
 		}
 	}
 
+	void remove(int begin, int end, int val) {
+		int t;
+		for (size_t i = begin; i < end; i++) {
+			if (array[i] == val) {
+				for (size_t j = i; j < size; j++) {
+					t = array[j + 1];
+					array[j + 1] = array[j];
+					array[j] = t;
+				}
+			}
+		}
+		size--; 
+	}
+
 	void print () {
 		for (size_t i = 0; i < size; i++) {
 			cout << array[i] << " "; 
@@ -136,6 +150,16 @@ void Test6() {
 	v.print();
 }
 
+void Test7() {
+	Myvector v(4);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.remove(0, 3, 2);
+	v.print();
+}
+
 
 
 
@@ -152,6 +176,8 @@ int main() {
 	Test5(); 
 	cout << endl;
 	Test6();
+	cout << endl;
+	Test7(); 
 	
 	
 	
