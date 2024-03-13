@@ -27,22 +27,29 @@ public:
 		}
 	}
 	void push_front(int val) {
+		if (size == 0) {
+			array[0] = val;
+			size++;
+			return;
+		}
 		if (size == capacity) {
 			capacity = capacity * 2; 
-			int t = array[size - 1]; 
-			for (size_t i = 0; i < size; i++) {
-				array[i + 1] = array[i];
+			int t = array[size - 1];
+			for (size_t i = size - 1; i > 0; i--) {
+				array[i] = array[i - 1];
 			}
 			array[0] = val;
 			size++;
 			array[size - 1] = t;
 		}
 		else {
-			for (size_t i = 0; i < size ; i++) {
-				array[i + 1] = array[i];
+			int t = array[size - 1];
+			for (size_t i = size - 1; i > 0 ; i--) {
+				array[i] = array[i - 1];
 			} 
 			array[0] = val;
 			size++;
+			array[size - 1] = t;
 			
 		}
 	}
@@ -94,6 +101,7 @@ public:
 };
 void Test1()
 {
+	cout << "Push_back First test:" << endl;
 	Myvector v(4);
 	v.push_back(0);
 	v.push_back(1);
@@ -103,6 +111,7 @@ void Test1()
 }
 
 void Test2() {
+	cout << "Push_back test:" << endl; 
 	Myvector v(3);
 	v.push_back(0);
 	v.push_back(1);
@@ -114,6 +123,7 @@ void Test2() {
 }
 
 void Test3() {
+	cout << "Pop_back:" << endl; 
 	Myvector v(2);
 	v.push_back(0);
 	v.push_back(1); 
@@ -122,15 +132,27 @@ void Test3() {
 }
 
 void Test4() {
-	Myvector v(2);
+	cout << "Push_front:" << endl;
+	Myvector v(3);
 	v.push_front(1); 
 	v.push_front(2);
 	v.push_front(3);
-	//v.push_front(4);
+	v.push_front(4);
 	v.print();
 }
 
 void Test5() {
+	cout << "Push_front:" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_front(4);
+	v.print();
+}
+
+void Test6() {
+	cout << "Pop_front:" << endl; 
 	Myvector v(4);
 	v.push_back(1);
 	v.push_back(2);
@@ -140,17 +162,19 @@ void Test5() {
 	v.print();
 }
 
-void Test6() {
+void Test7() {
+	cout << "Insert:" << endl;
 	Myvector v(4);
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
 	v.push_back(4);
-	v.insert(0, 10);
+	v.insert(2, 10);
 	v.print();
 }
 
-void Test7() {
+void Test8() {
+	cout << "Remove:" << endl; 
 	Myvector v(4);
 	v.push_back(1);
 	v.push_back(2);
@@ -163,7 +187,7 @@ void Test7() {
 
 
 
-int main() {
+ int main() {
 
 	Test1();
 	cout << endl;
@@ -173,14 +197,13 @@ int main() {
 	cout << endl;
 	Test4();
 	cout << endl;
-	Test5(); 
+	Test5();
 	cout << endl;
-	Test6();
+	Test6(); 
 	cout << endl;
-	Test7(); 
-	
-	
-	
+	Test7();
+	cout << endl;
+	Test8(); 
 }
 
 
