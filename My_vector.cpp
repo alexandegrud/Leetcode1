@@ -14,19 +14,56 @@ public:
 		array = new int[i]; 
 	}
 	Myvector() = default; 
-	
-	void push_back(int val) {
-		if (size == capacity) {
-			capacity = capacity * 2;
-			array[size] = val;
-			size++; 
-		}
-		else {
-			array[size] = val;
-			size++; 
+
+	~Myvector() {
+		if (size != 0) {
+			delete[] array; 
 		}
 	}
+
+	Myvector(const Myvector& other) {
+		this->size = other.size;
+		this->capacity = other.capacity;
+		this->array = new int[other.size];
+		for (size_t i = 0; i < other.size; i++) {
+			this->array[i] = other.array[i];
+		}
+	}
+
+	Myvector& operator = (const Myvector& other) {
+		this->size = other.size;
+		this->capacity = other.capacity;
+		if (this->array != nullptr) {
+			delete[] this->array;
+		}
+		this->array = new int[other.size];
+		for (size_t i = 0; i < other.size; i++) {
+			this->array[i] = other.array[i];
+		}
+		return *this;
+	}
+	
+	void push_back(int val) {
+		if (capacity == 0) {
+			return;
+		}
+		if (size == capacity) {
+			capacity = capacity * 2;
+			int* temp = new int[capacity]; 
+			for (size_t i = 0; i < size; i++) {
+				temp[i] = array[i];
+			}
+			delete[] array; 
+			array = temp; 
+			
+		}
+		array[size] = val;
+		size++;
+	}
 	void push_front(int val) {
+		if (capacity == 0) {
+			return; 
+		}
 		if (size == 0) {
 			array[0] = val;
 			size++;
@@ -34,26 +71,28 @@ public:
 		}
 		if (size == capacity) {
 			capacity = capacity * 2; 
-			int t = array[size - 1];
-			for (size_t i = size - 1; i > 0; i--) {
-				array[i] = array[i - 1];
+			int* temp = new int[capacity];
+			for (size_t i = 0; i < size; i++) {
+				temp[i] = array[i];
 			}
-			array[0] = val;
-			size++;
-			array[size - 1] = t;
+			delete[] array;
+			array = temp;
 		}
-		else {
-			int t = array[size - 1];
-			for (size_t i = size - 1; i > 0 ; i--) {
-				array[i] = array[i - 1];
-			} 
-			array[0] = val;
-			size++;
-			array[size - 1] = t;
+		int t = array[size - 1];
+		for (size_t i = size - 1; i > 0; i--) {
+			array[i] = array[i - 1];
+		}
+		array[0] = val;
+		size++;
+		array[size - 1] = t;
 			
-		}
+		
 	}
 	void pop_front() {
+		if (size == 0) {
+			cout << "There are no elements to delete, size = 0";
+			return;
+		}
 		for (size_t i = 1; i < size ; i++) {
 			array[i - 1] = array[i]; 
 		}
@@ -61,11 +100,16 @@ public:
 	}
 
 	void pop_back() {
+		if (size == 0) {
+			cout << "There are no elements to delete, size = 0";
+			return;
+		}
 		size--; 
 	}
 
 	void insert(int pos, int val) {
 		if (pos < 0 || pos > size) {
+			cout << "Invalid value of position";
 			return;
 		}
 		else {
@@ -79,16 +123,29 @@ public:
 		}
 	}
 
-	void remove(int begin, int end, int val) {
-		int t;
+	void remove_if(int begin, int end, int val) {
+		if (begin < 0 || begin > size || end > size || begin > end) {
+			cout << "Invalid value" << endl;
+			return;
+		}
 		for (size_t i = begin; i < end; i++) {
 			if (array[i] == val) {
 				for (size_t j = i; j < size; j++) {
-					t = array[j + 1];
-					array[j + 1] = array[j];
-					array[j] = t;
+					swap(array[j], array[j + 1]);
 				}
 			}
+		}
+		size--; 
+	}
+
+	void remove(int begin, int end) {
+		if (begin < 0 || begin > size || end > size || begin > end) {
+			cout << "Invalid value" << endl; 
+			return;
+		}
+		for (size_t i = begin; i < end; i++) {
+			swap(array[i], array[size - 1]);
+			size--;
 		}
 		size--; 
 	}
@@ -174,17 +231,105 @@ void Test7() {
 }
 
 void Test8() {
-	cout << "Remove:" << endl; 
-	Myvector v(4);
+	cout << "Remove_if:" << endl; 
+	Myvector v(5);
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
 	v.push_back(4);
-	v.remove(0, 3, 2);
+	v.remove_if(0, 3, 2);
 	v.print();
 }
 
+void Test9() {
+	cout << "Remove:" << endl; 
+	Myvector v(5);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.push_back(4);
+	v.push_back(5);
+	v.remove(1, 3); 
+	v.print(); 
+}
 
+void Test10() {
+	cout << "Copy class:" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	Myvector b(v);
+	b.push_back(4);
+	b.print(); 
+}
+
+void Test11() {
+	cout << "The Assignment operator:" << endl;
+	Myvector v(4);
+	v.push_back(1);
+	v.push_back(2);
+	Myvector a(3);
+	a.push_back(9);
+	a.push_back(10);
+	Myvector c(1);
+	c.push_front(10000); 
+	v = a = c; 
+	v.print();
+	cout << endl;
+	a.print();
+}
+
+void Test12() {
+	cout << "Pop_back when size 0:" << endl;
+	Myvector v(0);
+	v.pop_back();
+}
+
+void Test13() {
+	cout << "Pop_front when size 0:" << endl;
+	Myvector v(0);
+	v.pop_front();
+}
+
+void Test14() {
+	cout << "Insert when position > size:" << endl;
+	Myvector v(0); 
+	v.insert(1, 1);
+}
+
+void Test15() {
+	cout << "Insert when position < 0:" << endl;
+	Myvector v(0);
+	v.insert(-1, 1);
+}
+
+void Test16() {
+	cout << "Remove when begin < 0:" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.remove(-1, 2);
+}
+
+void Test17() {
+	cout << "Remove when begin > end" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.remove(3, 2);
+}
+
+void Test18() {
+	cout << "Remove when begin or end > size" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	v.remove(4, 5);
+}
 
 
  int main() {
@@ -195,7 +340,7 @@ void Test8() {
 	cout << endl;
 	Test3(); 
 	cout << endl;
-	Test4();
+    Test4();
 	cout << endl;
 	Test5();
 	cout << endl;
@@ -204,6 +349,26 @@ void Test8() {
 	Test7();
 	cout << endl;
 	Test8(); 
+	cout << endl;
+	Test9();
+	cout << endl;
+	Test10();
+	cout << endl;
+	Test11();
+	cout << endl;
+	Test12();
+	cout << endl;
+	Test13();
+	cout << endl;
+	Test14();
+	cout << endl;
+	Test15();
+	cout << endl;
+	Test16();
+	cout << endl;
+	Test17();
+	cout << endl;
+	Test18();
 }
 
 
