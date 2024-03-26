@@ -10,43 +10,72 @@ public:
 
 
 	Myvector(int i) {
+		if (i < 0) {
+			cout << "invalid value"; 
+			return;
+		}
 		capacity = i;
 		array = new int[i]; 
 	}
 	Myvector() = default; 
 
 	~Myvector() {
-		if (size != 0) {
+		if ( capacity != 0) {
 			delete[] array; 
 		}
 	}
 
 	Myvector(const Myvector& other) {
-		this->size = other.size;
-		this->capacity = other.capacity;
-		this->array = new int[other.size];
+		size = other.size;
+		capacity = other.capacity;
+		array = new int[other.size];
 		for (size_t i = 0; i < other.size; i++) {
-			this->array[i] = other.array[i];
+			array[i] = other.array[i];
 		}
 	}
 
 	Myvector& operator = (const Myvector& other) {
-		this->size = other.size;
-		this->capacity = other.capacity;
-		if (this->array != nullptr) {
-			delete[] this->array;
+		size = other.size;
+		capacity = other.capacity;
+		if (array != nullptr) {
+			delete[] array;
 		}
-		this->array = new int[other.size];
+		array = new int[other.size];
 		for (size_t i = 0; i < other.size; i++) {
-			this->array[i] = other.array[i];
+			array[i] = other.array[i];
 		}
 		return *this;
 	}
+
+	bool operator ==(const Myvector& other) {
+		if (size != other.size || capacity != other.capacity) {
+			return false;
+		}
+		for (size_t i = 0; i < size; i++) {
+			if (array[i] != other.array[i]) {
+				return false;
+			}
+			if(size == i + 1) {
+				return true;
+			}
+		}
+	}
+
+	bool operator!=(const Myvector& other) {
+		if (size != other.size || capacity != other.capacity) {
+			return true;
+		}
+		for (size_t i = 0; i < size; i++) {
+			if (array[i] != other.array[i]) {
+				return true;
+			}
+			if (size == i + 1) {
+				return false;
+			}
+		}
+	}
 	
 	void push_back(int val) {
-		if (capacity == 0) {
-			return;
-		}
 		if (size == capacity) {
 			capacity = capacity * 2;
 			int* temp = new int[capacity]; 
@@ -61,9 +90,6 @@ public:
 		size++;
 	}
 	void push_front(int val) {
-		if (capacity == 0) {
-			return; 
-		}
 		if (size == 0) {
 			array[0] = val;
 			size++;
@@ -130,7 +156,7 @@ public:
 		}
 		for (size_t i = begin; i < end; i++) {
 			if (array[i] == val) {
-				for (size_t j = i; j < size; j++) {
+				for (size_t j = i; j < size - 1; j++) {
 					swap(array[j], array[j + 1]);
 				}
 			}
@@ -232,7 +258,7 @@ void Test7() {
 
 void Test8() {
 	cout << "Remove_if:" << endl; 
-	Myvector v(5);
+	Myvector v(4);
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
@@ -331,6 +357,71 @@ void Test18() {
 	v.remove(4, 5);
 }
 
+void Test19() {
+	cout << "Negative value:" << endl;
+	Myvector v(-2);
+}
+
+void Test20() {
+	cout << "Comparison of class objects:" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	Myvector b(3);
+	b.push_back(1);
+	b.push_back(2);
+	b.push_back(3);
+
+	bool result = v == b;
+	cout << result;
+}
+
+void Test21() {
+	cout << "Comparison of class when other size or capacity:" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	
+	Myvector b(3);
+	b.push_back(1);
+	b.push_back(2);
+	b.push_back(3);
+
+	bool result = v == b;
+	cout << result;
+}
+
+void Test22() {
+	cout << "Comparison of class when (!=):" << endl;
+	Myvector v(3);
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+	Myvector b(3);
+	b.push_back(1);
+	b.push_back(2);
+	b.push_back(3);
+
+	bool result = v != b;
+	cout << result;
+}
+
+void Test23() {
+	cout << "Comparison of class when (!=):" << endl;
+	Myvector v(2);
+	v.push_back(1);
+	v.push_back(2);
+
+	Myvector b(3);
+	b.push_back(1);
+	b.push_back(2);
+	b.push_back(3);
+
+	bool result = v != b;
+	cout << result;
+}
+
 
  int main() {
 
@@ -369,6 +460,16 @@ void Test18() {
 	Test17();
 	cout << endl;
 	Test18();
+	cout << endl;
+	Test19();
+	cout << endl;
+	Test20();
+	cout << endl;
+	Test21();
+	cout << endl;
+	Test22();
+	cout << endl;
+	Test23();
 }
 
 
