@@ -50,6 +50,18 @@ public:
 		return temp; 
 	}
 
+	Complex& operator ++() {
+		re++; 
+		im++;
+		return *this; 
+	}
+
+	Complex& operator --() {
+		re--;
+		im--;
+		return *this;
+	}
+
 	bool operator ==(const Complex& other) {
 		if (re != other.re || im != other.im) {
 			return false; 
@@ -145,6 +157,21 @@ void NotEqual() {
 	cout << result << endl;
 }
 
+void Increment() {
+	cout << "Increment:" << endl;
+	Complex a(5, 1);
+	++a; 
+	Complex b = a;
+	b.print(); 
+}
+
+void Decrement() {
+	cout << "Decrement:" << endl;
+	Complex a(7, 7);
+	--a;
+	a.print();
+}
+
 
 int main() {
 	Sum();
@@ -155,4 +182,6 @@ int main() {
 	Equal(); 
 	EqualDifferentNumbers();
 	NotEqual(); 
+	Increment();
+	Decrement();
 }
