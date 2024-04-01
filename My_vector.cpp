@@ -26,24 +26,14 @@ public:
 	}
 
 	Myvector(const Myvector& other) {
-		size = other.size;
-		capacity = other.capacity;
-		array = new int[other.size];
-		for (size_t i = 0; i < other.size; i++) {
-			array[i] = other.array[i];
-		}
+		copy(other);
 	}
 
 	Myvector& operator = (const Myvector& other) {
-		size = other.size;
-		capacity = other.capacity;
 		if (array != nullptr) {
 			delete[] array;
 		}
-		array = new int[other.size];
-		for (size_t i = 0; i < other.size; i++) {
-			array[i] = other.array[i];
-		}
+		copy(other); 
 		return *this;
 	}
 
@@ -55,9 +45,7 @@ public:
 			if (array[i] != other.array[i]) {
 				return false;
 			}
-			if(size == i + 1) {
-				return true;
-			}
+		return true;
 		}
 	}
 
@@ -69,9 +57,7 @@ public:
 			if (array[i] != other.array[i]) {
 				return true;
 			}
-			if (size == i + 1) {
-				return false;
-			}
+			return false;
 		}
 	}
 	
@@ -179,6 +165,15 @@ public:
 	void print () {
 		for (size_t i = 0; i < size; i++) {
 			cout << array[i] << " "; 
+		}
+	}
+
+	void copy(const Myvector& other) {
+		size = other.size;
+		capacity = other.capacity;
+		array = new int[other.size];
+		for (size_t i = 0; i < other.size; i++) {
+			array[i] = other.array[i];
 		}
 	}
 };
